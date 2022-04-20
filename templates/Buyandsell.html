@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+<title>{% block title %}Add Products{% endblock %}</title>
+
+{% block content %}
+
+<div class="main-content">
+    <div class="profileDetails">
+        <div class="card p-3">
+            <h1>Add Products </h1>
+
+            <form class="mt-3" action="/product-submit/"method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <label>Product Name</label>
+                <input class="form-control" type="text" name="name" required>
+                <label>Product Description</label>
+                <input class="form-control" type="text" name="desc" required>
+                <label>Product Price</label>
+                <input class="form-control" type="text" name="price" required>
+                <label>How old product is?</label>
+                <input class="form-control" type="text" name="productage" required>
+                <label>Product Image</label>
+                <input class="form-control" type="file" name="productimg" required>
+               
+                <div >{{msg}}</div>                
+                
+                
+                <button class="btn btn-dark btn-sm mb-3" type="submit">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

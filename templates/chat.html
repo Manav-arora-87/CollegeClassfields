@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+<title>{% block title %} College Classfields {% endblock %}</title>
+
+{% block content %}
+
+    <!---- Main Body ---->
+    <div class="main-content">
+      <div class="overlay">
+        <div class="container">
+          <div class="showcase">
+            <h5 class=''>Madhav Institute of Technology & Science </h5>
+            <h6><b>Race course road,Gole Ka Mandir,Gwalior</b></h6>
+
+            <h1><a href="{% url 'student-buysell'%}">Buy & Sell Classfields</a></h1>
+            
+
+            
+              
+
+
+          </div>
+
+
+
+
+
+
+          <div class=" mt-5 mb-5">
+            <div class="product-title">
+              <h3>Chat with end user</h3>
+            </div>
+            <div class="row">
+
+              <div class="col-xs-12 col-md-12 col-lg-8 mt-3">
+                <!-- loop -->
+                <div class="left-food-item p-3">
+                  <div class=" mb-3 p-2">
+                    <div class="row">
+                      
+                      
+
+                        <div class="container">
+                            <div class="row clearfix">
+                                <div class="col-lg-12">
+                                    <div class="card chat-app">
+                                    <div id="alert-box"></div>
+                                      
+                                        <div class="chat">
+                                            <div class="chat-header clearfix">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        
+                                                        <div   id="username" class="chat-about">
+                                                           <b> <h6  class="m-b-0" style="padding:8px;">{{student.name}}</h6></b>
+                                                        </div>
+                                                    </div>
+                                                  
+                                                </div>
+                                            </div>
+                          
+                          
+                                            <div class="chat-history" >
+                                                <ul class="m-b-0" id="messages-box">
+                                                  
+                                                </ul>
+                                            </div>
+                                        
+                                            <div class="chat-message clearfix">
+                                                <div class="input-group mb-0">
+                                                    
+                                                    <input type="text" class="form-control"  id="message-input"  placeholder="Enter text here..."> {% csrf_token%}
+                                                    <div class="input-group-prepend"  id="send-btn">
+                                                        <span class="input-group-text"><i class="fa fa-send"></i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                                                            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                                                          </svg></span>
+                                                    </div>                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                          
+
+
+
+
+
+                            
+
+                    </div>
+                  </div>
+                <!-- loop -->
+                </div>
+              </div>
+              
+              <div class="col-xs-12 col-md-12 col-lg-4 mt-3">
+                <div class="category text-white text-center" data-spy="scroll" data-target=".main-content">
+                  <h3 class="pt-3">{{res.studentid.name}}</h3> 
+                  <b><h6  class="m-b-0" style="color:black">Branch- {{res.studentid.branch}}</h6><b>
+                    <b><h6  class="m-b-0" style="color:black">Year- {{res.studentid.year}}</h6><b>
+                        <b><h6  class="m-b-0" style="color:black">Addresss- {{res.studentid.address}}</h6><b>
+                  <hr>
+                  {% comment %} {% for category in all_category %} {% endcomment %}
+                    <ul>
+                     
+                      <li>
+                          sdsdfs
+                        <a href="#">{{res.studentid.mob}}</a>
+                      </li>
+                    </ul>
+                  {% comment %} {% endfor %} {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+              
+            </div>
+
+            
+          </div>
+
+
+           
+
+
+
+
+
+
+          
+     
+          <!-- Paginator -->
+          <!-- Paginator -->
+        </div>    
+      
+      </div>
+    </div>
+
+
+
+
+<!---- Main Body ---->
+
+      <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
+      <script src="/static/main.js"></script>
+{% endblock %}

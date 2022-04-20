@@ -1,0 +1,133 @@
+
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>SignIn / SignUp</title>
+
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body class="bg-dark">
+
+    <!-- loginForm -->
+    <div class="loginBox">
+        <div class="row mb-3">
+            <div class="col">
+                <button id="signin-button">Login</button>
+            </div>
+            <div class="col">
+                <button id="signup-button">Registration</button>
+            </div>
+        </div>
+
+        <div>
+            <form id="signup-form" method="POST" action="{% url 'student-register' %}">
+                {% csrf_token %}
+                <div class="form-group mt-4">
+                    <label class="text-dark">Full Name</label>
+                    <input name="name" class="form-control" type="text" placeholder="Enter Full Name">
+                </div>
+
+                <div class="form-group mt-4">
+                    <label class="text-dark">Branch</label>
+                    <input name="branch" class="form-control" type="text" placeholder="Enter Branch">
+                </div>
+
+                 <div class="form-group mt-4">
+                    <label class="text-dark">College Mail-Id</label>
+                    <input name="email" class="form-control" type="email" placeholder="Enter College Email-id">
+                </div>
+                <div class="form-group mt-4">
+                    <label class="text-dark">Address</label>
+                    <input name="address" class="form-control" type="text" placeholder="Address...">
+                </div>
+                <div class="form-group mt-4">
+                    <label class="text-dark">Current Study Year</label>
+                    <input name="year" class="form-control" type="text" placeholder="Current Study Year">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Password</label>
+                    <input name="password" id="password" class="form-control" type="password" placeholder="password">
+                </div>
+
+                <div class="form-group pb-3">
+                    <label for="">Confirm Password</label>
+                    <input name="repassword" id="repassword" onkeyup="chk()"class="form-control" type="password" placeholder="Confirm password">
+                    <div id="msg"></div>
+                </div>
+
+                <button class="btn btn-dark" type="submit">Submit</button>
+            </form>
+
+            <form id="signin-form" method="POST" action="{% url 'student-checklogin' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="">College Email Id</label>
+                    <input name="emailid" class="form-control" type="text" placeholder="Enter clg-mail id">
+                </div>
+
+                <div class="form-group pb-3">
+                    <label for="">Password</label>
+                    <input name="password" class="form-control" type="password" placeholder="password">
+                </div>
+
+                <button class="btn btn-dark" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Javascript -->
+    <script>
+        init();
+
+        function init() {
+            $("#signin-button").css("border-bottom", "3px solid black");
+            $("#signin-form").css("display", "block");
+            }
+
+            $("#signin-button").on("click", function() {
+            $(this).css("border-bottom", "3px solid black");
+            $("#signup-button").css("border-bottom", "3px solid white");
+
+            $("#signup-form").css("display", "none")
+                $("#signin-form").slideDown(400, function() {
+                $(this).css("display", "block");
+            });
+            });
+
+            $("#signup-button").on("click", function() {
+            $(this).css("border-bottom", "3px solid black");
+            $("#signin-button").css("border-bottom", "3px solid white");
+
+            $("#signin-form").css("display", "none");
+            $("#signup-form").slideDown(400, function() {
+                $(this).css("display", "block");
+            });
+        });
+
+
+
+
+        function chk(){
+              
+            if(password.value==repassword.value)
+            {msg.innerHTML = "<font color='green'>Password Matched</font>"  
+            }
+            else
+            {msg.innerHTML = "<font color='red'>Password not matched</font>"}
+          
+            }    
+    </script>
+</body>
+</html>

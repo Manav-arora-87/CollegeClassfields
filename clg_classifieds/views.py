@@ -6,4 +6,4 @@ from datetime import *
 
 # Create your views here.
 def HOME(request):
-    return render(request,'home.html')
+    return render(request,'index.html')

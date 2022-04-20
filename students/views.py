@@ -45,7 +45,7 @@ def StudentLogin(request):
 
 def Logout(request):
     request.session.flush()
-    return render(request,'home.html')
+    return render(request,'index.html')
 
 def CheckStudentLogin(request):
     
@@ -67,7 +67,7 @@ def CheckStudentLogin(request):
     except Exception as e:
           print(e)  
           Logout(request) 
-          return render(request, "home.html", {'msg': 'Server Error'})
+          return render(request, "index.html", {'msg': 'Server Error'})
 
 def Studentdashboard(request):
     

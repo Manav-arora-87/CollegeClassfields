@@ -34,7 +34,8 @@
                   <div class="card mb-3 p-2">
                     <div class="row">
                       <div class="col-xs-12 col-md-5">
-                          <img class="img-thumbnail" src="/static/productimg/{{product.img}}">
+                        {% comment %} <img class="img-thumbnail" src="/static/productimg/{{product.img}}"> {% endcomment %}
+                        <img class="img-thumbnail" src="/media/{{product.img}}">
                       </div>
                       <div class="col-xs-12 col-md-7 text-left">
                         <h2 class="food-name">{{ product.productname }}</h2>

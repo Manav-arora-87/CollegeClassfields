@@ -128,20 +128,21 @@ def Productsubmit(request):
         price = request.POST['price']
         productage = request.POST['productage']
         img = request.FILES['productimg']
+        # print(img)
         filename = str(uuid.uuid4())+img.name[img.name.rfind('.'):]
-        t=Products.objects.create(img=filename,productname=name,productdesc=description,price=price,productage=productage,studentid_id=result)
+        t=Products.objects.create(img=img,productname=name,productdesc=description,price=price,productage=productage,studentid_id=result)
         t.save()
-        F = open('F:/clg_classifieds/assets/productimg/'+filename,"wb")
-        for chunk in img.chunks():
-            F.write(chunk)
-            F.close()
-        print(name,description,price,productage,img)
+        # F = open('F:/clg_classifieds/assets/productimg/'+filename,"wb")
+        # for chunk in img.chunks():
+        #      F.write(chunk)
+        #      F.close()
+        # print(name,description,price,productage,img)
         return redirect('student-buysell')
 
 
     
     except  Exception as e:
-        print(e)
+        print("error",e)
         # Logout(request) 
         return redirect('student-login')
 

@@ -129,7 +129,7 @@ class Products(models.Model):
     price = models.IntegerField(blank=True, null=True)
     productage = models.CharField(max_length=45, blank=True, null=True)
     studentid = models.ForeignKey('Students', models.DO_NOTHING, db_column='studentid', blank=True, null=True)
-    img = models.TextField(blank=True, null=True)
+    img = models.FileField(upload_to="student/images", default='' ,blank=False, null=True)
 
     class Meta:
         managed = False

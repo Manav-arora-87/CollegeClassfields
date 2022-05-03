@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import JsonResponse
 import bcrypt
+from math import ceil
 from students.models import Students,Products
 
 from django.contrib.auth import authenticate, login, logout
@@ -52,10 +53,10 @@ def CheckStudentLogin(request):
 
     try:
         emailid = request.POST['emailid']
-        print(emailid)
+        print("email id " , emailid)
         password = request.POST['password']
         admin=Students.objects.get(emailid=emailid)
-        print(admin)
+        print("admin" ,admin)
         # # Adminlogins.ob
         if bcrypt.checkpw(password.encode("utf8"), admin.password.encode("utf8")):
              request.session['student']=admin.id
@@ -123,26 +124,27 @@ def Productsubmit(request):
     
     try:
         result = request.session['student']
+        
         name = request.POST['name']
+        category=request.POST['category']
         description = request.POST['desc']
         price = request.POST['price']
         productage = request.POST['productage']
         img = request.FILES['productimg']
-        # print(img)
-        filename = str(uuid.uuid4())+img.name[img.name.rfind('.'):]
-        t=Products.objects.create(img=img,productname=name,productdesc=description,price=price,productage=productage,studentid_id=result)
+        #filename = str(uuid.uuid4())+img.name[img.name.rfind('.'):]
+        t=Products.objects.create(img=img,productname=name,category=category,productdesc=description,price=price,productage=productage,studentid_id=result)
         t.save()
-        # F = open('F:/clg_classifieds/assets/productimg/'+filename,"wb")
-        # for chunk in img.chunks():
-        #      F.write(chunk)
-        #      F.close()
-        # print(name,description,price,productage,img)
+        #F = open('F:/clg_classifieds/assets/productimg/'+filename,"wb")
+        #for chunk in img.chunks():
+         #   F.write(chunk)
+          #  F.close()
+        #print(name,description,price,productage,img)
         return redirect('student-buysell')
 
 
     
     except  Exception as e:
-        print("error",e)
+        print(e)
         # Logout(request) 
         return redirect('student-login')
 
@@ -216,3 +218,26 @@ class ActivateAccountView(View):
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
+
+def searchMatch(query, item):
+    if query in item.productdesc.lower() or query in item.productname.lower() or query in item.category.lower():
+        return True
+    else:
+        return False
+
+
+def search(request):
+    query = request.GET.get('search')
+    allProds = []
+    catprods = Products.objects.values('category', 'id')
+    cats = {item['category'] for item in catprods}
+    
+    for cat in cats:
+        prodtemp = Products.objects.filter(category=cat)
+        for item in prodtemp :
+           if searchMatch(query, item):
+               prod=item
+               allProds.append(prod)
+       
+    print(allProds)
+    return render(request, 'search.html', {'products':allProds})

@@ -78,12 +78,23 @@ DATABASES = {
     'default': {
         'NAME': 'clg_classfields',
         'ENGINE': 'django.db.backends.mysql',
+        'USER': 'root',
+        'PASSWORD': 'hp1234',
+        'HOST': 'localhost', 
+    }
+}
+
+'''
+DATABASES = {
+    'default': {
+        'NAME': 'clg_classfields',
+        'ENGINE': 'django.db.backends.mysql',
         'USER': 'admin',
         'PASSWORD': '9131285337',
         'HOST': 'database-1.cenwprx98qyc.us-east-1.rds.amazonaws.com', 
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

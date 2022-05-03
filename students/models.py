@@ -125,6 +125,7 @@ class DjangoSession(models.Model):
 class Products(models.Model):
     productname = models.CharField(max_length=500, blank=True, null=True)
     productdesc = models.CharField(max_length=500, blank=True, null=True)
+    category= models.CharField(max_length=500, blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)
     price = models.IntegerField(blank=True, null=True)
     productage = models.CharField(max_length=45, blank=True, null=True)

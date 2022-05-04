@@ -13,11 +13,12 @@
             <h6><b>Race course road,Gole Ka Mandir,Gwalior</b></h6>
 
             <h1><a href="{% url 'student-buysell' %}">Buy & Sell Classfields</a></h1>
-              {% comment %} <!---- Search ---->
-            <form class="search input-group mt-4" method="GET" action="{% url 'home' %}">
-              <input type="text" name='q' class="form-control" placeholder="আপনি কি খুঁজছেন?...">
-              <button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
-            </form> {% endcomment %}
+              <!---- Search ---->
+            
+            <form class="search input-group mt-4" method='get' action="{% url 'Search' %}" >
+              <input class="form-control me-2" type="search" name='search' placeholder="Search" aria-label="Search">
+              <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
+            </form>
               <!---- Search ---->
           </div>
 

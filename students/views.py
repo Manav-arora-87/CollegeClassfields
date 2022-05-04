@@ -239,5 +239,5 @@ def search(request):
                prod=item
                allProds.append(prod)
        
-    print(allProds)
+    
     return render(request, 'search.html', {'products':allProds})

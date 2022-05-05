@@ -161,6 +161,7 @@ def Registeration(request):
         
     pwd = request.POST['password']
     name= request.POST['name']
+    mobno= request.POST['mobno']
     branch= request.POST['branch']
     year= request.POST['year']
     address= request.POST['address']
@@ -168,7 +169,7 @@ def Registeration(request):
     salt= bcrypt.gensalt()
     hashed = bcrypt.hashpw(pwd.encode("utf8"),salt)
     hashed=(hashed.decode("utf8"))
-    t=Students.objects.create(emailid=clgemail,is_active=0,password=hashed,name=name,branch=branch,address=address,year=year) #clgid needs to be removed
+    t=Students.objects.create(mob=mobno,emailid=clgemail,is_active=0,password=hashed,name=name,branch=branch,address=address,year=year) #clgid needs to be removed
     t.save()
     current_site = get_current_site(request)
     email_subject = 'Active your Account'

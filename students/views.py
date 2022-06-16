@@ -23,7 +23,8 @@ from django.contrib import messages
 # from validate_email import validate_email
 from django.contrib.auth.models import User
 from datetime import *
-import uuid , os
+from django.contrib.auth.decorators import login_required
+import uuid , os , json,requests
 domain={'mitsgwl.ac.in','sgsits.ac.in'}
 
 
@@ -56,19 +57,26 @@ def CheckStudentLogin(request):
         print("email id " , emailid)
         password = request.POST['password']
         admin=Students.objects.get(emailid=emailid)
-        print("admin" ,admin)
+        #recaptcha stuff 
+        clientkey = request.POST['g-recaptcha-response']
+        secretkey = settings.GOOGLE_RECAPTCHA_SECRET_KEY
+        captchadata={'secret':secretkey,'response':clientkey}
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify',data=captchadata)
+        response = json.loads(r.text)
+        verify = response['success']
+        print(verify)
         # # Adminlogins.ob
-        if bcrypt.checkpw(password.encode("utf8"), admin.password.encode("utf8")):
+        if bcrypt.checkpw(password.encode("utf8"), admin.password.encode("utf8")) and verify:
              request.session['student']=admin.id
              return redirect('student-dashboard')
         else:
-            return render(request, "Login.html")
+            return render(request, "Login.html",{'msg': 'Please enter correct password or tick the recaptcha'})
         
 
     except Exception as e:
           print(e)  
           Logout(request) 
-          return render(request, "index.html", {'msg': 'Server Error'})
+          return render(request, "Login.html", {'msg': 'Please enter correct password or tick the recaptcha'})
 
 def Studentdashboard(request):
     
@@ -76,9 +84,9 @@ def Studentdashboard(request):
         
         result = request.session['student']
         products=reversed(Products.objects.all())
-        
+        temp=Products.objects.all()
 
-        return render(request, "Dashboard.html",{'products':products})
+        return render(request, "Dashboard.html",{'products':products,'temp':temp})
 
     
     except  Exception as e:

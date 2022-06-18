@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6sk4g74)(sltc3%2g4w0nf04m6d_==sjkq6&4!opix4paf1&=w'
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LdG5RYgAAAAAKxSv1XKO8cKPtuafDoBuyipySg1'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition

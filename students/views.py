@@ -9,7 +9,7 @@ from students.models import Students,Products
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-
+from django.core.files.storage import default_storage
 import threading
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
@@ -132,27 +132,20 @@ def Productsubmit(request):
     
     try:
         result = request.session['student']
-        
         name = request.POST['name']
         category=request.POST['category']
         description = request.POST['desc']
         price = request.POST['price']
         productage = request.POST['productage']
         img = request.FILES['productimg']
-        #filename = str(uuid.uuid4())+img.name[img.name.rfind('.'):]
         t=Products.objects.create(img=img,productname=name,category=category,productdesc=description,price=price,productage=productage,studentid_id=result)
         t.save()
-        #F = open('F:/clg_classifieds/assets/productimg/'+filename,"wb")
-        #for chunk in img.chunks():
-         #   F.write(chunk)
-          #  F.close()
-        #print(name,description,price,productage,img)
         return redirect('student-buysell')
 
 
     
     except  Exception as e:
-        print(e)
+        print("Product_Submit",e)
         # Logout(request) 
         return redirect('student-login')
 

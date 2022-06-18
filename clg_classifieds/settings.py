@@ -25,7 +25,7 @@ GOOGLE_RECAPTCHA_SECRET_KEY = '6LdG5RYgAAAAAKxSv1XKO8cKPtuafDoBuyipySg1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'students',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +84,10 @@ DATABASES = {
         'HOST': 'localhost', 
     }
 }
+Access Key ID:
+AKIA5JPXNPPJOVPLGN64
+Secret Access Key:
+G+ULR7v4zCRc5gesVVCL53agqQp2RbYOlx+SRyoQ
 
 '''
 DATABASES = {
@@ -120,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Calcutta'
 
 USE_I18N = True
 
@@ -143,11 +148,12 @@ EMAIL_USE_SSL = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-import os
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+import os
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
@@ -159,3 +165,16 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+#S3 BUCKETS CONFIG
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = 'AKIA5JPXNPPJOVPLGN64'
+
+AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_STORAGE_BUCKET_NAME = 'collegekart'
+
+AWS_QUERYSTRING_AUTH = False

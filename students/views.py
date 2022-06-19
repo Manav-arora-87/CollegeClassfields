@@ -53,8 +53,6 @@ def CheckStudentLogin(request):
     
 
     try:
-        request.session['student']=admin.id
-        print("Manav")
         emailid = request.POST['emailid']
         print("email id " , emailid)
         password = request.POST['password']
@@ -69,7 +67,7 @@ def CheckStudentLogin(request):
         print(verify)
         # # Adminlogins.ob
         if bcrypt.checkpw(password.encode("utf8"), admin.password.encode("utf8")) and verify:
-             request.session['student']=admin.id
+            #  request.session['student']=admin.id
              return redirect('student-dashboard')
         else:
             return render(request, "login.html",{'msg': 'Please enter correct password or tick the recaptcha'})

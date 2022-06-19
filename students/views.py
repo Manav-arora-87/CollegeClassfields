@@ -53,6 +53,8 @@ def CheckStudentLogin(request):
     
 
     try:
+        request.session['student']=admin.id
+        print("Manav")
         emailid = request.POST['emailid']
         print("email id " , emailid)
         password = request.POST['password']

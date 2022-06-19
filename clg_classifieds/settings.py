@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6sk4g74)(sltc3%2g4w0nf04m6d_==sjkq6&4!opix4paf1&=w'
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LdG5RYgAAAAAKxSv1XKO8cKPtuafDoBuyipySg1'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -180,3 +181,7 @@ AWS_SECRET_ACCESS_KEY = 'vMxtqyLOTkI90i5T8u5quYBvRRgH8u66ptL7+Gb6'
 AWS_STORAGE_BUCKET_NAME = 'collegekart'
 
 AWS_QUERYSTRING_AUTH = False
+
+
+#Activate Heroku settings for django
+django_heroku.settings(locals())

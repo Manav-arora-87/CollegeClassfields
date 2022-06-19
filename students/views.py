@@ -56,7 +56,9 @@ def CheckStudentLogin(request):
         emailid = request.POST['emailid']
         print("email id " , emailid)
         password = request.POST['password']
+        print(password)
         admin=Students.objects.get(emailid=emailid)
+        print("Manav",admin)
         #recaptcha stuff 
         clientkey = request.POST['g-recaptcha-response']
         secretkey = settings.GOOGLE_RECAPTCHA_SECRET_KEY
@@ -67,7 +69,7 @@ def CheckStudentLogin(request):
         print(verify)
         # # Adminlogins.ob
         if bcrypt.checkpw(password.encode("utf8"), admin.password.encode("utf8")) and verify:
-            #  request.session['student']=admin.id
+             request.session['student']=admin.id
              return redirect('student-dashboard')
         else:
             return render(request, "login.html",{'msg': 'Please enter correct password or tick the recaptcha'})

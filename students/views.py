@@ -70,7 +70,7 @@ def CheckStudentLogin(request):
              request.session['student']=admin.id
              return redirect('student-dashboard')
         else:
-            return render(request, "Login.html",{'msg': 'Please enter correct password or tick the recaptcha'})
+            return render(request, "login.html",{'msg': 'Please enter correct password or tick the recaptcha'})
         
 
     except Exception as e:

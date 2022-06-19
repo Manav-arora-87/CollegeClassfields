@@ -76,7 +76,7 @@ def CheckStudentLogin(request):
     except Exception as e:
           print(e)  
           Logout(request) 
-          return render(request, "Login.html", {'msg': 'Please enter correct password or tick the recaptcha'})
+          return render(request, "login.html", {'msg': 'Please enter correct password or tick the recaptcha'})
 
 def Studentdashboard(request):
     

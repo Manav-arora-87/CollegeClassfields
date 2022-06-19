@@ -55,11 +55,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'clg_classifieds.urls'
-TEMPLATES_PATH = os.path.join(SETTINGS_PATH, 'Templates')
+TEMPLATES_PATH = os.path.join(SETTINGS_PATH, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['Templates'],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

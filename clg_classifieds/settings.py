@@ -97,9 +97,10 @@ DATABASES = {
     'default': {
         'NAME': 'clg_classfields',
         'ENGINE': 'django.db.backends.mysql',
-        'USER': 'admin',
+        'USER': 'admin1',
         'PASSWORD': '9131285337',
-        'HOST': 'database-1.cenwprx98qyc.us-east-1.rds.amazonaws.com', 
+        # 'HOST': 'database-1.cenwprx98qyc.us-east-1.rds.amazonaws.com', 
+        'HOST':'database-1.cw26gusy1b1x.ap-south-1.rds.amazonaws.com'
     }
 }
 

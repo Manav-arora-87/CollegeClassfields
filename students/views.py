@@ -56,7 +56,7 @@ def CheckStudentLogin(request):
         emailid = request.POST['emailid']
         print("email id " , emailid)
         password = request.POST['password']
-        return redirect('student-dashboard')
+        print(password)
         admin=Students.objects.get(emailid=emailid)
         print("Manav",admin)
         #recaptcha stuff 
@@ -84,7 +84,7 @@ def Studentdashboard(request):
     
     try:
         
-        # result = request.session['student']
+        result = request.session['student']
         products=reversed(Products.objects.all())
         temp=Products.objects.all()
 

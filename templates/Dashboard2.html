@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+<title>{% block title %} College Classfields {% endblock %}</title>
+
+{% block content %}
+
+    <!---- Main Body ---->
+    <div class="main-content">
+      <div class="overlay">
+        <div class="container">
+          <div class="showcase">
+            <h5 class=''>Madhav Institute of Technology & Science </h5>
+            <h6><b>Race course road,Gole Ka Mandir,Gwalior</b></h6>
+
+            <h1><a href="{% url 'student-buysell' %}">Buy & Sell Classfields</a></h1>
+              <!---- Search ---->
+            
+            <form class="search input-group mt-4" method='get' action="{% url 'Search' %}" >
+              <input class="form-control me-2" type="search" name='search' placeholder="Search" aria-label="Search">
+              <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+              <!---- Search ---->
+          </div>
+
+          <div class="product mt-5">
+            <div class="product-title">
+              <h3>List of Products</h3>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-8 mt-3">
+                <!-- loop -->
+                <div class="left-food-item p-3">
+                  {% for product in products %}
+                    <!-- inject food image -->
+                  <div class="card mb-3 p-2">
+                    <div class="row">
+                      <div class="col-xs-12 col-md-5">
+                          <img class="img-thumbnail" src="/media/{{product.img}}">
+                      </div>
+                      <div class="col-xs-12 col-md-7 text-left">
+                        <h2 class="food-name">{{ product.productname }}</h2>
+                        <!-- inject food price -->
+                        <b>({{product.productdesc}})</b>
+                        <p class="food-price text-secondary">{{product.price}}/- &nbsp; &nbsp; &nbsp; {{product.productage}}</p>
+
+                        <!-- Button -->
+                        <a class='btn btn-success btn-sm'  href="{% url 'chat' product.id %}">Send Message to Owner</a>
+                        <!-- Button -->
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                <!-- loop -->
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-12 col-lg-4 mt-3">
+                <div class="category text-white text-center" data-spy="scroll" data-target=".main-content">
+                  <h3 class="pt-3">Category</h3> <hr>
+                  {% comment %} {% for category in all_category %} {% endcomment %}
+                    <ul>
+                      <li>
+                        <a href="#">Hostel Esentials</a>
+                      </li>
+                      <li>
+                        <a href="#">Notes</a>
+                      </li>
+                      <li>
+                        <a href="#">Accessories</a>
+                      </li>
+                      <li>
+                        <a href="#">General</a>
+                      </li>
+                    </ul>
+                  {% comment %} {% endfor %} {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Paginator -->
+          <!-- Paginator -->
+        </div>    
+      </div>
+    </div>
+
+
+
+
+<!---- Main Body ---->
+
+{% endblock %}

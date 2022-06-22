@@ -1,0 +1,1 @@
+web: gunicorn clg_classifieds.wsgi --log-file - 

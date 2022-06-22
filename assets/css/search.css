@@ -2,33 +2,15 @@
 
 
 
-form.search {
-  width: 50%;
-  margin: auto;
-}
-.search input {
-  width: 400px;
-  border: 3px solid #ff3f34;
-  padding: 5px;
+
+.searchbar {
+  
+  float: right;
+  width: 300px;
+  padding: 1px;
   outline: none;
-  color: #9DBFAF;
   text-align: center;
 }
 
-.searchTerm:focus{
-  color: #ff3f34;
-}
 
-.searchButton {
-  width: 55px;
-  border: 1px solid #ff3f34;
-  background: #ff3f34;
-  text-align: center;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 20px;
-  border-radius: 0 3px 3px 0;
-  display: block;
-}
 /* /////////////////////////////// */

@@ -9,7 +9,7 @@ from students.models import Students,Products
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-
+from django.core.files.storage import default_storage
 import threading
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
@@ -23,7 +23,8 @@ from django.contrib import messages
 # from validate_email import validate_email
 from django.contrib.auth.models import User
 from datetime import *
-import uuid , os
+from django.contrib.auth.decorators import login_required
+import uuid , os , json,requests
 domain={'mitsgwl.ac.in','sgsits.ac.in'}
 
 
@@ -55,20 +56,29 @@ def CheckStudentLogin(request):
         emailid = request.POST['emailid']
         print("email id " , emailid)
         password = request.POST['password']
+        print(password)
         admin=Students.objects.get(emailid=emailid)
-        print("admin" ,admin)
+        print("Manav",admin)
+        #recaptcha stuff 
+        clientkey = request.POST['g-recaptcha-response']
+        secretkey = settings.GOOGLE_RECAPTCHA_SECRET_KEY
+        captchadata={'secret':secretkey,'response':clientkey}
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify',data=captchadata)
+        response = json.loads(r.text)
+        verify = response['success']
+        print(verify)
         # # Adminlogins.ob
-        if bcrypt.checkpw(password.encode("utf8"), admin.password.encode("utf8")):
+        if bcrypt.checkpw(password.encode("utf8"), admin.password.encode("utf8")) and verify:
              request.session['student']=admin.id
              return redirect('student-dashboard')
         else:
-            return render(request, "Login.html")
+            return render(request, "login.html",{'msg': 'Please enter correct password or tick the recaptcha'})
         
 
     except Exception as e:
           print(e)  
           Logout(request) 
-          return render(request, "index.html", {'msg': 'Server Error'})
+          return render(request, "login.html", {'msg': 'Please enter correct password or tick the recaptcha'})
 
 def Studentdashboard(request):
     
@@ -76,9 +86,9 @@ def Studentdashboard(request):
         
         result = request.session['student']
         products=reversed(Products.objects.all())
-        
+        temp=Products.objects.all()
 
-        return render(request, "Dashboard.html",{'products':products})
+        return render(request, "Dashboard.html",{'products':products,'temp':temp})
 
     
     except  Exception as e:
@@ -124,27 +134,20 @@ def Productsubmit(request):
     
     try:
         result = request.session['student']
-        
         name = request.POST['name']
         category=request.POST['category']
         description = request.POST['desc']
         price = request.POST['price']
         productage = request.POST['productage']
         img = request.FILES['productimg']
-        #filename = str(uuid.uuid4())+img.name[img.name.rfind('.'):]
         t=Products.objects.create(img=img,productname=name,category=category,productdesc=description,price=price,productage=productage,studentid_id=result)
         t.save()
-        #F = open('F:/clg_classifieds/assets/productimg/'+filename,"wb")
-        #for chunk in img.chunks():
-         #   F.write(chunk)
-          #  F.close()
-        #print(name,description,price,productage,img)
         return redirect('student-buysell')
 
 
     
     except  Exception as e:
-        print(e)
+        print("Product_Submit",e)
         # Logout(request) 
         return redirect('student-login')
 
@@ -161,6 +164,7 @@ def Registeration(request):
         
     pwd = request.POST['password']
     name= request.POST['name']
+    mobno= request.POST['mobno']
     branch= request.POST['branch']
     year= request.POST['year']
     address= request.POST['address']
@@ -168,7 +172,7 @@ def Registeration(request):
     salt= bcrypt.gensalt()
     hashed = bcrypt.hashpw(pwd.encode("utf8"),salt)
     hashed=(hashed.decode("utf8"))
-    t=Students.objects.create(emailid=clgemail,is_active=0,password=hashed,name=name,branch=branch,address=address,year=year) #clgid needs to be removed
+    t=Students.objects.create(mob=mobno,emailid=clgemail,is_active=0,password=hashed,name=name,branch=branch,address=address,year=year) #clgid needs to be removed
     t.save()
     current_site = get_current_site(request)
     email_subject = 'Active your Account'
@@ -239,5 +243,5 @@ def search(request):
                prod=item
                allProds.append(prod)
        
-    print(allProds)
+    
     return render(request, 'search.html', {'products':allProds})

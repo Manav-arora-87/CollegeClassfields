@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logo.png' %}">
 
     <title>SignIn / SignUp</title>
 
@@ -34,38 +35,40 @@
                 {% csrf_token %}
                 <div class="form-group mt-4">
                     <label class="text-dark">Full Name</label>
-                    <input name="name" class="form-control" type="text" placeholder="Enter Full Name">
+                    <input required name="name" class="form-control" type="text" placeholder="Enter Full Name">
                 </div>
 
                 <div class="form-group mt-4">
                     <label class="text-dark">Branch</label>
-                    <input name="branch" class="form-control" type="text" placeholder="Enter Branch">
+                    <input required name="branch" class="form-control" type="text" placeholder="Enter Branch">
                 </div>
 
                  <div class="form-group mt-4">
                     <label class="text-dark">College Mail-Id</label>
-                    <input name="email" class="form-control" type="email" placeholder="Enter College Email-id">
+                    <input required ame="email" class="form-control" type="email" placeholder="Enter College Email-id">
                 </div>
+
                 <div class="form-group mt-4">
-                    <label class="text-dark">Address</label>
-                    <input name="address" class="form-control" type="text" placeholder="Address...">
+                    <label class="text-dark">Mobile Number</label>
+                    <input  required name="mobno" class="form-control" type="text" placeholder="Enter Mobile number">
                 </div>
+                
                 <div class="form-group mt-4">
                     <label class="text-dark">Current Study Year</label>
-                    <input name="year" class="form-control" type="text" placeholder="Current Study Year">
+                    <input required name="year" class="form-control" type="number" placeholder="Current Study Year">
                 </div>
 
                 <div class="form-group">
                     <label for="">Password</label>
-                    <input name="password" id="password" class="form-control" type="password" placeholder="password">
+                    <input required name="password" id="password" class="form-control" type="password" placeholder="password">
                 </div>
 
                 <div class="form-group pb-3">
                     <label for="">Confirm Password</label>
-                    <input name="repassword" id="repassword" onkeyup="chk()"class="form-control" type="password" placeholder="Confirm password">
+                    <input  required name="repassword" id="repassword" onkeyup="chk()"class="form-control" type="password" placeholder="Confirm password">
                     <div id="msg"></div>
                 </div>
-
+                
                 <button class="btn btn-dark" type="submit">Submit</button>
             </form>
 
@@ -73,14 +76,15 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="">College Email Id</label>
-                    <input name="emailid" class="form-control" type="text" placeholder="Enter clg-mail id">
+                    <input required name="emailid" class="form-control" type="text" placeholder="Enter clg-mail id">
                 </div>
 
                 <div class="form-group pb-3">
                     <label for="">Password</label>
-                    <input name="password" class="form-control" type="password" placeholder="password">
+                    <input  required name="password" class="form-control" type="password" placeholder="password">
                 </div>
-
+                <div required class="g-recaptcha" data-sitekey="6LdG5RYgAAAAALtLFQ9a6lYT05NN9FL83-L-_y2_"></div>
+                <div style="color:red" >{{msg}}</div>
                 <button class="btn btn-dark" type="submit">Submit</button>
             </form>
         </div>
@@ -88,6 +92,8 @@
 
 
     <!-- Javascript -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
     <script>
         init();
 

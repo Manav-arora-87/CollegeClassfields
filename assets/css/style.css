@@ -46,24 +46,36 @@ html, body {
 
 .brand {
   width: 100%;
-  height: 110px;
+  height: 130px;
   background: #2c3e50;
   font-size: 4rem;
   font-family: 'noto';
   text-align: center;
-  padding-top: 0.8rem;
+  
   border-bottom: 4px solid #ffdd59;
 }
+
 .brand img {
   position: fixed;
-  top: 6%;
+  top: 9%;
   left: 40%;
   width: 65px;
   transform: translate(-50%, -50%);
 }
+.brand marquee {
+  position: fixed;
+  top: 3%;
+  font-family: 'noto';
+  font-size: 2rem;
+  color: #C8E000;
+
+  transform: translate(-50%, -50%);
+}
+
+
 .brand h1 {
   position: fixed;
-  top: 7%;
+  top: 10%;
   left: 51%;
   color: #C8E000;
   transform: translate(-50%, -50%);
@@ -120,7 +132,7 @@ html, body {
 }
 
 .showcase {
-  background-image: url(../images/bg1.jpg);
+  background-image: url(../images/logo.png);
   background-size: cover;
   background-position: center;
   width: 100%;

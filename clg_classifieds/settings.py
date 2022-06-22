@@ -9,19 +9,20 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import django_heroku
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-6sk4g74)(sltc3%2g4w0nf04m6d_==sjkq6&4!opix4paf1&=w'
-
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LdG5RYgAAAAAKxSv1XKO8cKPtuafDoBuyipySg1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -38,11 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'students',
+    'storages',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -51,11 +55,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'clg_classifieds.urls'
-
+TEMPLATES_PATH = os.path.join(SETTINGS_PATH, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['Templates'],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,15 +87,20 @@ DATABASES = {
         'HOST': 'localhost', 
     }
 }
+Access Key ID:
+AKIA5JPXNPPJOVPLGN64
+Secret Access Key:
+G+ULR7v4zCRc5gesVVCL53agqQp2RbYOlx+SRyoQ
 
 '''
 DATABASES = {
     'default': {
         'NAME': 'clg_classfields',
         'ENGINE': 'django.db.backends.mysql',
-        'USER': 'admin',
+        'USER': 'admin1',
         'PASSWORD': '9131285337',
-        'HOST': 'database-1.cenwprx98qyc.us-east-1.rds.amazonaws.com', 
+        # 'HOST': 'database-1.cenwprx98qyc.us-east-1.rds.amazonaws.com', 
+        'HOST':'database-1.cw26gusy1b1x.ap-south-1.rds.amazonaws.com'
     }
 }
 
@@ -120,7 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Calcutta'
 
 USE_I18N = True
 
@@ -143,19 +152,32 @@ EMAIL_USE_SSL = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-import os
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
-
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "assets"),
-    )
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "assets"),)
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+django_heroku.settings(locals())
+#S3 BUCKETS CONFIG
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = 'AKIA5JPXNPPJPHKGLNVY'
+
+AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_STORAGE_BUCKET_NAME = 'collegekart'
+
+AWS_QUERYSTRING_AUTH = False
+

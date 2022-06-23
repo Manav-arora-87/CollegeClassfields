@@ -25,6 +25,9 @@ from django.contrib.auth.models import User
 from datetime import *
 from django.contrib.auth.decorators import login_required
 import uuid , os , json,requests
+from django.views.decorators.csrf import csrf_exempt
+
+
 domain={'mitsgwl.ac.in','sgsits.ac.in'}
 
 
@@ -38,6 +41,7 @@ class EmailThread(threading.Thread):
         self.email_message.send()       
  
 # Create your views here.
+@csrf_exempt
 def StudentLogin(request):
     try:
         result = request.session['student']
@@ -49,6 +53,7 @@ def Logout(request):
     request.session.flush()
     return render(request,'index.html')
 
+@csrf_exempt
 def CheckStudentLogin(request):
     
 
@@ -69,8 +74,8 @@ def CheckStudentLogin(request):
         print(verify)
         # # Adminlogins.ob
         if bcrypt.checkpw(password.encode("utf8"), admin.password.encode("utf8")) and verify:
-             request.session['student']=admin.id
-             return redirect('student-dashboard')
+            request.session['student']=admin.id
+            return redirect('student-dashboard')
         else:
             return render(request, "login.html",{'msg': 'Please enter correct password or tick the recaptcha'})
         
@@ -80,6 +85,8 @@ def CheckStudentLogin(request):
           Logout(request) 
           return render(request, "login.html", {'msg': 'Please enter correct password or tick the recaptcha'})
 
+
+@csrf_exempt
 def Studentdashboard(request):
     
     try:
@@ -97,7 +104,7 @@ def Studentdashboard(request):
         return redirect('student-login')
 
 
-
+@csrf_exempt
 def BuySell(request):
     
     try:
@@ -153,21 +160,21 @@ def Productsubmit(request):
 
 
 
-
+@csrf_exempt
 def Registeration(request):
    try: 
-    clgemail = request.POST['email']
+    clgemail = request.POST.get('email')
     
     last= clgemail.split('@')
     if last[1] not in domain:
          return JsonResponse({"error": "Your coleege is not yet registered !!!"}, status=400)
         
-    pwd = request.POST['password']
-    name= request.POST['name']
-    mobno= request.POST['mobno']
-    branch= request.POST['branch']
-    year= request.POST['year']
-    address= request.POST['address']
+    pwd = request.POST.get('password')
+    name= request.POST.get('name')
+    mobno= request.POST.get('mobno')
+    branch= request.POST.get('branch')
+    year= request.POST.get('year')
+    address= request.POST.get('address')
     
     salt= bcrypt.gensalt()
     hashed = bcrypt.hashpw(pwd.encode("utf8"),salt)
@@ -198,7 +205,7 @@ def Registeration(request):
 
     return redirect('student-login') 
    except Exception as e:
-     print (e)
+     print ("error",e)
      return JsonResponse({"error": "Status not upadated "}, status=400)
 
 

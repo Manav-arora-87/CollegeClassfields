@@ -24,7 +24,10 @@
           <section id="portfolio" class="portfolio section-bg resume">
 
            
-            
+            <form class="search input-group mt-4" method='get' action="{% url 'Search' %}" >
+              <input class="form-control me-2" type="search" name='search' placeholder="Search" aria-label="Search">
+              <button class="searchButton" type="submit">Search</button>
+            </form>
             <div class="container">
               
               <div class="row">
@@ -33,12 +36,8 @@
                     <li data-filter="*" class="filter-active">All</li>
                     <li data-filter=".filter-app">College Esentials</li>
                     <li data-filter=".filter-card">Hostel Esentials</li>
-                    <li data-filter="..filter-web">Study Esentials</li>
-                    <li>
-
-                      <input  type="text"  placeholder=' Search for product.......'>
-                      <a href="#" type="button">Search</a>
-                    </li>
+                    <li data-filter=".filter-web">Study Esentials</li>
+                   
                   </ul>
                 </div>
               </div>
@@ -49,11 +48,11 @@
                 
                 data-aos-delay="100"
               >
-              {% for product in products %}
+              {% for product in college %}
               
                 <div class="col-lg-3 col-md-6 portfolio-item filter-app"  data-aos="fade-left">
                   <div class="card" style="width: 18rem;">
-                    <img src="https://collegekart.s3.ap-south-1.amazonaws.com/{{product.img}}" class="card-img-top" alt="..." width="350" height="250">
+                    <img  src="/media/{{product.img}}"  class="card-img-top" alt="..." width="350" height="250">
                     <div class="card-body">
                       <h5 class="card-title">{{product.productname|slice:":20"}}...</h5>
                       <p class="card-text">{{product.price}}</p>
@@ -67,37 +66,49 @@
                
                 {% endfor %}
 
-                
+                {% for product in hostel %}
+              
+                <div class="col-lg-3 col-md-6 portfolio-item filter-card"  data-aos="fade-left">
+                  <div class="card" style="width: 18rem;">
+                    <img  src="/media/{{product.img}}"  class="card-img-top" alt="..." width="350" height="250">
+                    <div class="card-body">
+                      <h5 class="card-title">{{product.productname|slice:":20"}}...</h5>
+                      <p class="card-text">{{product.price}}</p>
+                      <p class="card-text">{{product.productdesc|slice:":30"}}...</p>
+                      <a href="https://wa.me//+91{{product.studentid.mob}}" target="_blank" class="btn btn-primary">Send Message to Owner</a>
+                    </div>
+                  </div>
+                  
+                  
+                </div>
+               
+                {% endfor %}
+
+                {% for product in study %}
+              
+                <div class="col-lg-3 col-md-6 portfolio-item filter-web"  data-aos="fade-left">
+                  <div class="card" style="width: 18rem;">
+                    <img  src="/media/{{product.img}}"  class="card-img-top" alt="..." width="350" height="250">
+                    <div class="card-body">
+                      <h5 class="card-title">{{product.productname|slice:":20"}}...</h5>
+                      <p class="card-text">{{product.price}}</p>
+                      <p class="card-text">{{product.productdesc|slice:":30"}}...</p>
+                      <a href="https://wa.me//+91{{product.studentid.mob}}" target="_blank" class="btn btn-primary">Send Message to Owner</a>
+                    </div>
+                  </div>
+                  
+                  
+                </div>
+               
+                {% endfor %}
+
+             
+
                 
                 
                
 
-                {% for product in temp %}
-                <div class="col-lg-3 col-md-6 portfolio-item filter-card">
-                  <div class="portfolio-wrap">
-                    <img
-                      src="/media/{{product.img}}" 
-                      width="300" height="300"
-                      alt=""
-                    />
-                    <div class="portfolio-links">
-                      <a
-                        href="/media/{{product.img}}" 
-                        data-gallery="portfolioGallery"
-                        class="portfolio-lightbox" title="Expand View"
-                        
-                        ><i class="bx bx-plus"></i
-                      ></a>
-                      <a href="https://github.com/Manav-arora-87" target="__blank" title="More Details"
-                        ><i class="bx bx-link"></i
-                      ></a>
-                    </div>
-                  </div>
-                
-
-                </div>
-                {% endfor %}
-                
+                             
 
               </div>
             </div>

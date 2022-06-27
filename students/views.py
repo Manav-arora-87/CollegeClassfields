@@ -25,9 +25,6 @@ from django.contrib.auth.models import User
 from datetime import *
 from django.contrib.auth.decorators import login_required
 import uuid , os , json,requests
-from django.views.decorators.csrf import csrf_exempt
-
-
 domain={'mitsgwl.ac.in','sgsits.ac.in'}
 
 
@@ -41,7 +38,6 @@ class EmailThread(threading.Thread):
         self.email_message.send()       
  
 # Create your views here.
-@csrf_exempt
 def StudentLogin(request):
     try:
         result = request.session['student']
@@ -53,7 +49,6 @@ def Logout(request):
     request.session.flush()
     return render(request,'index.html')
 
-@csrf_exempt
 def CheckStudentLogin(request):
     
 
@@ -74,8 +69,8 @@ def CheckStudentLogin(request):
         print(verify)
         # # Adminlogins.ob
         if bcrypt.checkpw(password.encode("utf8"), admin.password.encode("utf8")) and verify:
-            request.session['student']=admin.id
-            return redirect('student-dashboard')
+             request.session['student']=admin.id
+             return redirect('student-dashboard')
         else:
             return render(request, "login.html",{'msg': 'Please enter correct password or tick the recaptcha'})
         
@@ -85,17 +80,17 @@ def CheckStudentLogin(request):
           Logout(request) 
           return render(request, "login.html", {'msg': 'Please enter correct password or tick the recaptcha'})
 
-
-@csrf_exempt
 def Studentdashboard(request):
     
     try:
         
         result = request.session['student']
         products=reversed(Products.objects.all())
-        temp=Products.objects.all()
+        collegeesentials=reversed(Products.objects.filter(category=1))
+        hostelesentials=reversed(Products.objects.filter(category=2))
+        studyesentials=reversed(Products.objects.filter(category=3))
 
-        return render(request, "Dashboard.html",{'products':products,'temp':temp})
+        return render(request, "Dashboard.html",{'products':products,'college':collegeesentials,'hostel':hostelesentials,'study':studyesentials})
 
     
     except  Exception as e:
@@ -104,7 +99,7 @@ def Studentdashboard(request):
         return redirect('student-login')
 
 
-@csrf_exempt
+
 def BuySell(request):
     
     try:
@@ -142,7 +137,7 @@ def Productsubmit(request):
     try:
         result = request.session['student']
         name = request.POST['name']
-        category=request.POST['category']
+        category=int(request.POST['category'])
         description = request.POST['desc']
         price = request.POST['price']
         productage = request.POST['productage']
@@ -160,26 +155,26 @@ def Productsubmit(request):
 
 
 
-@csrf_exempt
+
 def Registeration(request):
    try: 
-    clgemail = request.POST.get('email')
+    clgemail = request.POST['email']
     
     last= clgemail.split('@')
     if last[1] not in domain:
          return JsonResponse({"error": "Your coleege is not yet registered !!!"}, status=400)
         
-    pwd = request.POST.get('password')
-    name= request.POST.get('name')
-    mobno= request.POST.get('mobno')
-    branch= request.POST.get('branch')
-    year= request.POST.get('year')
-    address= request.POST.get('address')
+    pwd = request.POST['password']
+    name= request.POST['name']
+    mobno= request.POST['mobno']
+    branch= request.POST['branch']
+    year= request.POST['year']
+    # address= request.POST['address']
     
     salt= bcrypt.gensalt()
     hashed = bcrypt.hashpw(pwd.encode("utf8"),salt)
     hashed=(hashed.decode("utf8"))
-    t=Students.objects.create(mob=mobno,emailid=clgemail,is_active=0,password=hashed,name=name,branch=branch,address=address,year=year) #clgid needs to be removed
+    t=Students.objects.create(mob=mobno,emailid=clgemail,is_active=0,password=hashed,name=name,branch=branch,year=year) #clgid needs to be removed
     t.save()
     current_site = get_current_site(request)
     email_subject = 'Active your Account'
@@ -205,7 +200,7 @@ def Registeration(request):
 
     return redirect('student-login') 
    except Exception as e:
-     print ("error",e)
+     print (e)
      return JsonResponse({"error": "Status not upadated "}, status=400)
 
 
@@ -231,7 +226,7 @@ def is_ajax(request):
 
 
 def searchMatch(query, item):
-    if query in item.productdesc.lower() or query in item.productname.lower() or query in item.category.lower():
+    if query in item.productdesc.lower() or query in item.productname.lower():
         return True
     else:
         return False
@@ -239,6 +234,7 @@ def searchMatch(query, item):
 
 def search(request):
     query = request.GET.get('search')
+    print(query)
     allProds = []
     catprods = Products.objects.values('category', 'id')
     cats = {item['category'] for item in catprods}
